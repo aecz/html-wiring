@@ -3,6 +3,7 @@ var util = require('util');
 var fs = require('fs');
 var path = require('path');
 var cheerio = require('cheerio');
+var detectNewline = require('detect-newline');
 
 /**
  * @mixin
@@ -29,7 +30,9 @@ var wiring = module.exports;
  */
 
 wiring.domUpdate = function domUpdate(html, tagName, content, mode) {
-  var $ = cheerio.load(html, { decodeEntities: false });
+  var $ = cheerio.load(html, {
+    decodeEntities: false
+  });
 
   if (content !== undefined) {
     if (mode === 'a') {
@@ -160,11 +163,7 @@ wiring.appendFiles = function appendFiles(htmlOrOptions, fileType, optimizedPath
 
   attrs = this.attributes(attrs);
 
-  if (html.indexOf('\r\n') > 0) {
-    eolChar = '\r\n';
-  } else {
-    eolChar = '\n';
-  }
+  eolChar = detectNewline(html);
 
   if (fileType === 'js') {
     sourceFileList.forEach(function (el) {
