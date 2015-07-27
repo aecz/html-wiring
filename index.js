@@ -30,9 +30,7 @@ var wiring = module.exports;
  */
 
 wiring.domUpdate = function domUpdate(html, tagName, content, mode) {
-  var $ = cheerio.load(html, {
-    decodeEntities: false
-  });
+  var $ = cheerio.load(html, { decodeEntities: false });
 
   if (content !== undefined) {
     if (mode === 'a') {
